@@ -1,0 +1,29 @@
+pipeline {
+    agent {
+        dockerfile true
+    }
+
+    stages {
+        stage('Run Provar Tests') {
+            steps {
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"       
+                sh "xvfb-run ant -f ProvarAutomation/ANT/build.xml"
+            }
+        }
+    }
+
+    post {
+        always {
+            junit allowEmptyResults: true, testResults: 'ProvarAutomation/ANT/Results/*.xml'
+            // cleanWs notFailBuild: true
+        }
+
+        success {
+            echo "Success: Good job!"
+        }        
+
+        failure {            
+            echo 'Failure: Something went wrong with the Provar ANT build.'
+        }        
+    }
+}

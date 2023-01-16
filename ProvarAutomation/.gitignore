@@ -1,0 +1,7 @@
+/.metadata/
+.chromeProfiles
+.testcycles
+/ANT/Results*
+/bin/
+.DS_Store
+/ANT/ant.sh
